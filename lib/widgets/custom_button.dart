@@ -22,8 +22,12 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       child: TextButton(
         onPressed: ontap,
-        child: Text(label),
+        child: Text(
+          label,
+          style: TextStyle(color: labelColor),
+        ),
         style: TextButton.styleFrom(
+            backgroundColor: btnColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20))),
       ),

@@ -5,6 +5,11 @@ import 'package:blood_donation/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../utils/textStyle/textStyle.dart';
+import '../../utils/textStyle/textStyle.dart';
+import '../../utils/textStyle/textStyle.dart';
+import '../home/home.dart';
+
 class LoginNRegister extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final authController = Get.put(AuthController());
@@ -12,95 +17,217 @@ class LoginNRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: authController.islogin.value
-            ? Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrange,
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(20))),
-                    height: height * .3,
-                    child: Stack(children: [
-                      FlutterLogo(),
-                      Align(
-                          alignment: Alignment.bottomRight,
-                          child: Text(
-                            'Login',
-                            style: mediumText.copyWith(color: Colors.white),
-                          ))
-                    ]),
-                  ),
-                  Form(
-                    key: _formKey,
+      body: Obx(
+        () => SingleChildScrollView(
+            child: authController.islogin.value
+                ? Container(
+                    height: height,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomTextField(),
-                        SizedBox(),
-                        CustomTextField(),
-                        SizedBox(),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Forgot Password',
-                                style: mediumText.copyWith(
-                                    fontWeight: FontWeight.bold))),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.deepOrange,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(90))),
+                          height: height * .5,
+                          width: double.infinity,
+                          child: Stack(alignment: Alignment.center, children: [
+                            FlutterLogo(
+                              size: 80,
+                            ),
+                            Positioned(
+                                right: 30,
+                                bottom: 30,
+                                child: Text(
+                                  'Login',
+                                  style: mediumText.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ))
+                          ]),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20),
+                                CustomTextField(
+                                  hintText: 'Email',
+                                  prefixIcon: Icons.email,
+                                  inputBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                SizedBox(height: 20),
+                                CustomTextField(
+                                  hintText: 'Password',
+                                  prefixIcon: Icons.lock,
+                                  inputBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                SizedBox(height: 20),
+                                Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text('Forgot Password',
+                                        style: mediumText.copyWith(
+                                            fontWeight: FontWeight.w400))),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: CustomButton(
+                            btnColor: Colors.deepOrange,
+                            label: 'LOGIN',
+                            labelColor: Colors.white,
+                            ontap: () {
+                              Get.off(Home());
+                            },
+                          ),
+                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Don't have an account "),
-                            Text(" Register",
-                                style: mediumText.copyWith(
-                                    fontWeight: FontWeight.bold))
+                            InkWell(
+                              onTap: () {
+                                authController.islogin.value = false;
+                              },
+                              child: Text(" Register",
+                                  style: smallText.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).primaryColor)),
+                            )
                           ],
-                        )
+                        ),
+                        SizedBox(height: 20),
                       ],
                     ),
-                  ),
-                  CustomButton(label: 'LOGIN'),
-                ],
-              )
-            : Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.deepOrange,
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(20))),
-                    height: height * .3,
-                    child: Stack(children: [
-                      FlutterLogo(),
-                      Align(
-                          alignment: Alignment.bottomRight,
-                          child: Text(
-                            'Register',
-                            style: mediumText.copyWith(color: Colors.white),
-                          ))
-                    ]),
-                  ),
-                  Form(
-                    key: _formKey,
+                  )
+                : Container(
+                    height: height,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomTextField(),
-                        SizedBox(),
-                        CustomTextField(),
-                        SizedBox(),
-                        CustomTextField(),
-                        SizedBox(),
-                        CustomTextField(),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Forgot Password',
-                                style: mediumText.copyWith(
-                                    fontWeight: FontWeight.bold))),
+                        Container(
+                          decoration: BoxDecoration(
+                              // color: Colors.deepOrange,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(60))),
+                          height: height * .3,
+                          width: double.infinity,
+                          child: Stack(alignment: Alignment.center, children: [
+                            Container(
+                              height: 90,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                //border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(40),
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/request.png',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                                right: 30,
+                                bottom: 30,
+                                child: Text(
+                                  'Register',
+                                  style: mediumText.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ))
+                          ]),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20),
+                                CustomTextField(
+                                  hintText: 'Fullname',
+                                  prefixIcon: Icons.email,
+                                  inputBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                SizedBox(height: 20),
+                                CustomTextField(
+                                  hintText: 'Email',
+                                  prefixIcon: Icons.email,
+                                  inputBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                SizedBox(height: 20),
+                                CustomTextField(
+                                  hintText: 'Phone',
+                                  prefixIcon: Icons.email,
+                                  inputBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                SizedBox(height: 20),
+                                CustomTextField(
+                                  hintText: 'Password',
+                                  prefixIcon: Icons.lock,
+                                  inputBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                                SizedBox(height: 20),
+                                Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text('Forgot Password',
+                                        style: mediumText.copyWith(
+                                            fontWeight: FontWeight.bold))),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: CustomButton(
+                            btnColor: Colors.deepOrange,
+                            label: 'Register',
+                            labelColor: Colors.white,
+                            ontap: () {
+                              Get.off(Home());
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Already hava account "),
+                            InkWell(
+                              onTap: () {
+                                authController.islogin.value = true;
+                              },
+                              child: Text(" Login",
+                                  style: smallText.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).primaryColor)),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 20),
                       ],
                     ),
-                  ),
-                  CustomButton(label: 'LOGIN'),
-                ],
-              ),
+                  )),
       ),
     );
   }
