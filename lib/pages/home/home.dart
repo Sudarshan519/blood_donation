@@ -11,17 +11,32 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final homeController = Get.put(HomeController());
   BitmapDescriptor customIcon;
+  BitmapDescriptor userIcon;
   Set<Marker> markers;
-  createMarker(context) {
+  createMarker(context, image) {
     ImageConfiguration config =
         createLocalImageConfiguration(context, size: Size(10, 10));
     //  ImageConfiguration configuration = createLocalImageConfiguration(context);
     BitmapDescriptor.fromAssetImage(
       config,
-      'assets/request.png',
+      image,
     ).then((icon) {
       setState(() {
         customIcon = icon;
+      });
+    });
+  }
+
+  userMarker(context, image) {
+    ImageConfiguration config =
+        createLocalImageConfiguration(context, size: Size(10, 10));
+    //  ImageConfiguration configuration = createLocalImageConfiguration(context);
+    BitmapDescriptor.fromAssetImage(
+      config,
+      image,
+    ).then((icon) {
+      setState(() {
+        userIcon = icon;
       });
     });
   }
@@ -39,6 +54,7 @@ class _HomeState extends State<Home> {
             snippet: "Hi I'm a Platform Marker",
           ),
           onTap: () {
+            userMarker(context, 'assets/user.png');
             print("Marker tapped");
           },
         ),
@@ -81,6 +97,9 @@ class _HomeState extends State<Home> {
   Widget buildBody() {
     switch (homeController.selectedIndex.value) {
       case 0:
+        return Container(
+          child: Text('Members'),
+        );
         break;
       case 1:
         break;
@@ -94,7 +113,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //addMarker();
-    createMarker(context);
+    createMarker(context, 'assets/request.png');
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(
@@ -119,10 +138,11 @@ class _HomeState extends State<Home> {
                 myLocationEnabled: true,
                 myLocationButtonEnabled: true,
                 onTap: (pos) {
+                  userMarker(context, 'assets/user.png');
                   print(pos);
                   Marker m = Marker(
                       markerId: MarkerId('1sfesfe'),
-                      icon: customIcon,
+                      icon: userIcon,
                       position: pos);
                   setState(() {
                     markers.add(m);
@@ -137,6 +157,7 @@ class _HomeState extends State<Home> {
                 onMapCreated: (controller) {
                   Future.delayed(Duration(seconds: 2)).then(
                     (_) {
+                      addMarker();
                       controller.animateCamera(
                         CameraUpdate.newCameraPosition(
                           const CameraPosition(
@@ -167,7 +188,7 @@ class _HomeState extends State<Home> {
           currentIndex: homeController.selectedIndex.value,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.card_membership), label: 'Member'),
+                icon: Icon(Icons.card_membership), label: 'Requests'),
             BottomNavigationBarItem(icon: Icon(Icons.clear), label: 'map'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
           ],
@@ -181,7 +202,9 @@ class _HomeState extends State<Home> {
           homeController.selectedIndex.value = 1;
         },
         child: CircleAvatar(
-          // backgroundColor: Colors.transparent,
+          backgroundColor: homeController.selectedIndex.value == 1
+              ? Theme.of(context).primaryColor
+              : Colors.grey,
           child: Icon(Icons.map_sharp,
               color: homeController.selectedIndex.value == 1
                   ? Colors.white

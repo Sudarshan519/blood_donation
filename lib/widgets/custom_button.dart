@@ -7,7 +7,7 @@ class CustomButton extends StatelessWidget {
   final Color btnColor;
   final Function ontap;
   final Color labelColor;
-  final int borderRadius;
+  final double borderRadius;
   const CustomButton({
     Key key,
     this.label,
@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
         style: TextButton.styleFrom(
             backgroundColor: btnColor,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
+                borderRadius: BorderRadius.circular(borderRadius))),
       ),
     );
   }

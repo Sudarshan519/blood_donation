@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: CustomTheme.lightTheme,
       home: Splash(),
+      debugShowCheckedModeBanner: false,
       initialBinding: AllBinding(),
       //initialBinding: Get.put(),
     );
