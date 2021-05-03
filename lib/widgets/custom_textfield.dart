@@ -10,7 +10,7 @@ class CustomTextField extends StatelessWidget {
   final Color hintcolor;
   final Function ontap;
   final bool obscureText;
-
+final IconData suffixIcon;
   const CustomTextField(
       {Key key,
       this.controller,
@@ -19,11 +19,12 @@ class CustomTextField extends StatelessWidget {
       this.hintcolor,
       this.ontap,
       this.obscureText = false,
-      TextInputType textInputType, this.prefixIcon, this.label})
+      TextInputType textInputType, this.prefixIcon, this.label, this.suffixIcon})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
         validator: (v) {
           if (v.isEmpty) return '$hintText cannot be Empty';
           //email validation
@@ -64,6 +65,7 @@ class CustomTextField extends StatelessWidget {
           
             labelStyle: TextStyle(color: hintcolor),
             prefixIcon: Icon(prefixIcon),
+            suffixIcon: Icon(suffixIcon),
             labelText: label,
             border: inputBorder));
   }
